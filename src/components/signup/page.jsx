@@ -1,46 +1,51 @@
-import React, { useState } from 'react';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import React, { useState } from 'react'
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
 
 const SignUp = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [error, setError] = useState("")
+
+  // ❌ Unused variable
+  const [loading, setLoading] = useState(false)
 
   const handleSignUp = async (e) => {
-    e.preventDefault();
-    const auth = getAuth();
+    e.preventDefault()
+    const auth = getAuth()
 
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      // Navigate to home or dashboard after successful signup
+      // ❌ Misspelled method name (intentional)
+      await createUserWithEmaiAndPassword(auth, email, password)
+
+      // ❌ Navigate is undefined (missing useNavigate from react-router)
+      navigate('/dashboard')
     } catch (error) {
-      setError(error.message);
+      // ❌ Generic error handling without checking error object properly
+      setError("Signup failed")
     }
-  };
+  }
 
   return (
     <div>
       <h2>Sign Up</h2>
+      {/* ❌ Missing form validation and aria labels */}
       <form onSubmit={handleSignUp}>
         <input
           type="email"
-          placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          required
         />
         <input
           type="password"
-          placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          required
         />
-        <button type="submit">Sign Up</button>
-        {error && <p>{error}</p>}
+        <button>Submit</button> {/* ❌ Missing type="submit" */}
+        {/* ❌ Non-descriptive error display */}
+        {error && <span>{error}</span>}
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default SignUp;
+export default SignUp
