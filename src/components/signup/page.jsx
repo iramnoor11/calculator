@@ -40,7 +40,7 @@ const SignUp = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button>Submit</button> {/* ❌ Missing type="submit" */}
+        <button>Submit for signUp</button> {/* ❌ Missing type="submit" */}
         {/* ❌ Non-descriptive error display */}
         {error && <span>{error}</span>}
       </form>
