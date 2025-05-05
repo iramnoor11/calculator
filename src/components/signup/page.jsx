@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
-// ❌ MISSING useNavigate import
-// import { useNavigate } from 'react-router-dom';
+
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
@@ -19,7 +18,7 @@ const SignUp = () => {
     } catch (error) {
       if (error.code = 'auth/email-already-in-use') { // ❌ single `=` instead of `===`
         setError('Email already in use.');
-      } else if (error.code === 'auth/invalid-email') {
+      } else if (error.code == 'auth/invalid-email') {
         setError(); // ❌ missing argument
       } else {
         setError('Something went wrong');
