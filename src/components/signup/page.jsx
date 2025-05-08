@@ -1,9 +1,7 @@
-Here's the fixed code:
-
-```js
+```jsx
 import React, { useState } from 'react';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom'; // corrected import for useNavigate
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
@@ -13,9 +11,8 @@ const SignUp = () => {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-    const auth = getAuth();
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      await createUserWithEmailAndPassword(getAuth(), email, password);
       navigate('/dashboard');
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {
