@@ -1,27 +1,29 @@
+Here's the fixed code:
+
+```js
 import React, { useState } from 'react';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
-
+import { useNavigate } from 'react-router-dom'; // corrected import for useNavigate
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const navigate = useNavigate(); // ❌ useNavigate is undefined
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
     const auth = getAuth();
-
     try {
-      createUserWithEmailAndPassword(auth, email, password); // ❌ missing `await`
-      navigate('/dashboard'); // ❌ may execute before user creation completes
+      await createUserWithEmailAndPassword(auth, email, password);
+      navigate('/dashboard');
     } catch (error) {
-      if (error.code = 'auth/email-already-in-use') { // ❌ single `=` instead of `===`
+      if (error.code === 'auth/email-already-in-use') {
         setError('Email already in use.');
-      } else if (error.code == 'auth/invalid-email') {
-        setError(); // ❌ missing argument
+      } else if (error.code === 'auth/invalid-email') {
+        setError('Invalid email address.');
       } else {
-        setError('Something went wrong');
+        setError('Something went wrong.');
       }
     }
   };
@@ -35,7 +37,7 @@ const SignUp = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           aria-label="Email"
-          // ❌ missing `required` attribute
+          required
         />
         <input
           type="password"
@@ -44,12 +46,12 @@ const SignUp = () => {
           aria-label="Password"
           required
         />
-        <button>Submit</button> {/* ❌ missing `type="submit"` */}
-        {/* ❌ role is okay, but should be a more semantic element */}
-        {error && <div>{error}</div>}
+        <button type="submit" role="button">Submit</button>
+        {error && <div style={{ color: 'red' }}>{error}</div>}
       </form>
     </div>
   );
 };
 
 export default SignUp;
+```
