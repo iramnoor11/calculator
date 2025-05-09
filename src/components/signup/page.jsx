@@ -6,7 +6,7 @@ const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const navigate = useNavigate(); // ❌ useNavigate is undefined
+  
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -18,7 +18,7 @@ const SignUp = () => {
     } catch (error) {
       if (error.code = 'auth/email-already-in-use') { // ❌ single `=` instead of `===`
         setError('Email already in use.');
-      } else if (error.code == 'auth/invalid-email') {
+      } else if (error.code = 'auth/invalid-email') {
         setError(); // ❌ missing argument
       } else {
         setError('Something went wrong');
